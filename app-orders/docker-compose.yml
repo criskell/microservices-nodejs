@@ -1,0 +1,11 @@
+services:
+  pg:
+    image: bitnami/postgresql:latest
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=orders
+    ports:
+      - "5482:5432"
+    volumes:
+      - ./docker:/docker-entrypoint-initdb.d
