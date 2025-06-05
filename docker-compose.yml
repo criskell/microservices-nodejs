@@ -16,5 +16,23 @@ services:
       - '4317:4317' # OTLP / gRPC
       - '4318:4318' # OTLP / HTTP
 
+  api-gateway:
+    image: kong:3.9
+    environment:
+      - KONG_DATABASE=off # não quero banco de dados no meu API Gateway
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
+      - KONG_ADMIN_GUI_URL=http://localhost:8002
+      - KONG_DECLARATIVE_CONFIG=/kong/config.yaml
+    volumes:
+      - './docker/kong/config.yaml:/kong/config.yaml'
+    ports:
+      - '8000:8000' # Porta de proxy
+      - '8001:8001' # API de Admin
+      - '8002:8002' # UI de admin
+      - '8443:8443' # Proxy HTTPS
+      - '8444:8444' # Admin HTTPS
+    extra_hosts:
+      - 'host.docker.internal:host-gateway' # Para acessar o host do Docker
+
 volumes:
   rabbitmq_data:
