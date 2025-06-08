@@ -1,9 +1,5 @@
 import '@opentelemetry/auto-instrumentations-node/register';
 
-// Stateless:
-//  - Não guardar estado em disco.
-//  - Deve ser possível matar a aplicação e subir uma nova instância e funcionar normalmente.
-
 import { fastify } from 'fastify';
 import { setTimeout } from 'node:timers/promises';
 import z from 'zod';
@@ -28,14 +24,12 @@ app.setValidatorCompiler(validatorCompiler);
 
 app.register(fastifyCors, { origin: '*' });
 
-// Escalonamento horizontal (verifica se o serviço está rodando para que o load balancer possa distribuir as requisições)
-// Blue-Green deployment (ativa a nova versão quando tudo estiver pronto)
 app.get('/health', (request, reply) => {
   return 'ok';
 });
 
-app.get('/example', (request, reply) => {
-  const span = tracer.startSpan('example_span');
+app.get('/test', (request, reply) => {
+  const span = tracer.startSpan('test_span');
   span.setAttribute('test', 'test_value');
   span.end();
   reply.send({
