@@ -5,6 +5,7 @@ import { cluster } from '../cluster';
 import { invoicesDockerImage } from '../images/invoices';
 import { amqpListener } from './rabbitmq';
 import { appLoadBalancer } from '../load-balancer';
+import { config } from '../config';
 
 const invoicesTargetGroup = appLoadBalancer.createTargetGroup(
   'invoices-target',
@@ -43,15 +44,15 @@ export const invoicesService = new awsx.classic.ecs.FargateService(
         environment: [
           {
             name: 'BROKER_URL',
-            value: pulumi.interpolate`amqp://${pulumi.secret(
+            value: pulumi.interpolate`amqp://${config.requireSecret(
               'AMQP_USERNAME'
-            )}:${pulumi.secret('AMQP_PASSWORD')}@${
+            )}:${config.requireSecret('AMQP_PASSWORD')}@${
               amqpListener.endpoint.hostname
             }:${amqpListener.endpoint.port}`,
           },
           {
             name: 'DATABASE_URL',
-            value: pulumi.secret('INVOICES_DATABASE_URL'),
+            value: config.requireSecret('INVOICES_DATABASE_URL'),
           },
           {
             name: 'OTEL_TRACES_EXPORTER',
@@ -63,7 +64,7 @@ export const invoicesService = new awsx.classic.ecs.FargateService(
           },
           {
             name: 'OTEL_EXPORTER_OTLP_HEADERS',
-            value: pulumi.interpolate`Authorization=Basic ${pulumi.secret(
+            value: pulumi.interpolate`Authorization=Basic ${config.requireSecret(
               'GRAFANA_OTEL_API_KEY'
             )}`,
           },

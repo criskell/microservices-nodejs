@@ -2,6 +2,7 @@ import * as pulumi from '@pulumi/pulumi';
 import * as awsx from '@pulumi/awsx';
 import { cluster } from '../cluster';
 import { appLoadBalancer, networkLoadBalancer } from '../load-balancer';
+import { config } from '../config';
 
 const rabbitMQAdminTargetGroup = appLoadBalancer.createTargetGroup(
   'rabbitmq-admin-target',
@@ -59,11 +60,11 @@ export const rabbitMQService = new awsx.classic.ecs.FargateService(
         environment: [
           {
             name: 'RABBITMQ_DEFAULT_USER',
-            value: pulumi.secret('AMQP_USERNAME'),
+            value: config.requireSecret('AMQP_USERNAME'),
           },
           {
             name: 'RABBITMQ_DEFAULT_PASS',
-            value: pulumi.secret('AMQP_PASSWORD'),
+            value: config.requireSecret('AMQP_PASSWORD'),
           },
         ],
       },
