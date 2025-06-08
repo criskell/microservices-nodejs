@@ -1,4 +1,5 @@
 import '@opentelemetry/auto-instrumentations-node/register';
+import '../broker/subscriber.ts';
 
 import { fastify } from 'fastify';
 import { setTimeout } from 'node:timers/promises';
@@ -54,7 +55,7 @@ app.post(
     const orderId = randomUUID();
 
     await db.insert(schema.orders).values({
-      id: randomUUID(),
+      id: orderId,
       amount,
       customerId: 'b109edee-3fc1-470e-870b-14877f85b4bf',
     });

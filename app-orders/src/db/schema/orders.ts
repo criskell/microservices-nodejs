@@ -7,6 +7,7 @@ import { customers } from './customers.ts';
 
 export const orderStatusEnum = pgEnum('order_status', [
   'pending',
+  'invoiced',
   'paid',
   'canceled',
 ]);

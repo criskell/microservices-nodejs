@@ -1,15 +1,27 @@
+import { setTimeout } from 'node:timers/promises';
+
 import { orders } from './channels/orders.ts';
+import type { OrderCreatedMessage } from '../../../contracts/messages/order-created-message.ts';
+import { dispatchInvoiceCreated } from './messages/invoice-created.ts';
 
 orders.consume(
   'orders',
-  async (message) => {
-    if (!message) {
+  async (raw) => {
+    if (!raw) {
       return;
     }
 
-    console.log(message.content.toString());
+    const message: OrderCreatedMessage = JSON.parse(raw.content.toString());
 
-    orders.ack(message);
+    // Simulate invoice creation
+    console.log('Creating invoice for order:', message.orderId);
+    await setTimeout(3000);
+
+    dispatchInvoiceCreated({
+      orderId: message.orderId,
+    });
+
+    orders.ack(raw);
   },
   {
     noAck: false,
