@@ -62,19 +62,15 @@ export const adminAPIHttpListener = appLoadBalancer.createListener(
   }
 );
 
-// Serviço não precisa rodar em HTTPs, já que o LB ou API Gateway está rodando em HTTPs.
 export const kongService = new awsx.classic.ecs.FargateService('fargate-kong', {
   cluster,
   desiredCount: 1,
-  // Não espera o serviço estar pronto para criar a próxima tarefa.
   waitForSteadyState: false,
   taskDefinitionArgs: {
     container: {
       image: kongDockerImage.ref,
-      // CPU é 256 milicores, ou seja, 0.25 vCPU
       // 1vCPU = 1024 milicores
       cpu: 256,
-      // 512MB de memória
       memory: 512,
       portMappings: [
         proxyHttpListener,

@@ -4,7 +4,6 @@ import * as awsx from '@pulumi/awsx';
 import * as docker from '@pulumi/docker-build';
 
 const kongECRRepository = new awsx.ecr.Repository('kong-ecr', {
-  // Se apagar o repositório, apaga as imagens também.
   forceDelete: true,
 });
 
@@ -20,7 +19,6 @@ export const kongDockerImage = new docker.Image('kong-image', {
     location: '../docker/kong',
   },
   platforms: ['linux/amd64'],
-  // Faça o build e manda pro repositório
   push: true,
   registries: [
     {

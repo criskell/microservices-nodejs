@@ -4,7 +4,6 @@ import * as awsx from '@pulumi/awsx';
 import * as docker from '@pulumi/docker-build';
 
 const ordersECRRepository = new awsx.ecr.Repository('orders-ecr', {
-  // Se apagar o repositório, apaga as imagens também.
   forceDelete: true,
 });
 
@@ -20,7 +19,6 @@ export const ordersDockerImage = new docker.Image('orders-image', {
     location: '../app-orders',
   },
   platforms: ['linux/amd64'],
-  // Faça o build e manda pro repositório
   push: true,
   registries: [
     {

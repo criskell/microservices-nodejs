@@ -29,15 +29,12 @@ export const ordersService = new awsx.classic.ecs.FargateService(
   {
     cluster,
     desiredCount: 1,
-    // Não espera o serviço estar pronto para criar a próxima tarefa.
     waitForSteadyState: false,
     taskDefinitionArgs: {
       container: {
         image: ordersDockerImage.ref,
-        // CPU é 256 milicores, ou seja, 0.25 vCPU
         // 1vCPU = 1024 milicores
         cpu: 256,
-        // 512MB de memória
         memory: 512,
         portMappings: [ordersHttpListener],
         environment: [
