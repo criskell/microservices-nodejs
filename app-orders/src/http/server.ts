@@ -34,6 +34,15 @@ app.get('/health', (request, reply) => {
   return 'ok';
 });
 
+app.get('/example', (request, reply) => {
+  const span = tracer.startSpan('example_span');
+  span.setAttribute('test', 'test_value');
+  span.end();
+  reply.send({
+    message: 'Hello from Orders Service',
+  });
+});
+
 app.post(
   '/orders',
   {
