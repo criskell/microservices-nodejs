@@ -3,12 +3,9 @@ _transform: true
 
 services:
   - name: orders
-    url: http://host.docker.internal:3333
-    protocol: http
-    host: host.docker.internal
-    port: 3333
+    url: ${ORDERS_SERVICE_URL}
     path: /
-    connect_timeout: 60000
+    # connect_timeout: 60000
     # write_timeout: 60000
     # read_timeout: 60000
     retries: 3 # se o timeout ocorrer, o Kong tentará novamente 3 vezes.
@@ -20,19 +17,19 @@ services:
         paths:
           - /orders
 
-  - name: invoices
-    url: http://host.docker.internal:3334
-    protocol: http
-    host: host.docker.internal
-    port: 3334
-    path: /
-    routes:
-      - name: api-invoices
-        protocols:
-          - http
-          - https
-        paths:
-          - /invoices
+  # - name: invoices
+  #   url: http://host.docker.internal:3334
+  #   protocol: http
+  #   host: host.docker.internal
+  #   port: 3334
+  #   path: /
+  #   routes:
+  #     - name: api-invoices
+  #       protocols:
+  #         - http
+  #         - https
+  #       paths:
+  #         - /invoices
 
 plugins:
   - name: cors

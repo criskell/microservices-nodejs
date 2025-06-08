@@ -1,2 +1,10 @@
 config:
   aws:region: us-east-1
+  evento-node-infra:ORDERS_DATABASE_URL:
+    secure: AAABAJ2tmORJgne2x0TYYMFB293Nt0Y0kB/1TMIvYqo3D846y2y3PXoeKY0XM51qGKWvlEn4sIhNOYqzjbp1ihsQVDjipjWCH1BrLSs8yxQyRtehx3/EdPlfyMFRTLc0ULOU7ezsI2OF3pA1rxMxwZGEyPS4LlfT5mWnVs0vnu/RXHOreLLG/HuIVI1DUmtiCg==
+  evento-node-infra:GRAFANA_OTEL_API_KEY:
+    secure: AAABACEGd2UH5olRhdz8ax5B7mp3LzbjvUslpwVj+Uq7FRnHSWhlotvK2S+OxP/leBZ2JHZTtx1Go8QsIrG/L/UZR88Cr0FbDSvOqUhRIgIVCO/F3LT5tncjuDuxR2zlv7qmgXZ2xn1E688Mpti6EpqlSKeHRBeVArCKXvI+YpDXn3k1csClsq6V9eUl/pI2YlXuZo9AOhB8o4rFOeD/SOGf2YKt6uEwdMltHZRGOtCGCbwMyEYBNlz+zA8V39P2goGFutpdUtUbaWrA0/h2NNR5vJqpKBPnPV8W+EPG0uqFnSbp/gsflBJlODUN5q6PrpolstOlItd5EGPS2Yrz/jd2IDSzqot5hE/a0w==
+  evento-node-infra:AMQP_USERNAME:
+    secure: AAABAASE81t8XMThh7R60udVPDF9S8i8ZbZ/h+DYCvTtp2iITQ==
+  evento-node-infra:AMQP_PASSWORD:
+    secure: AAABAMlBiwTzgOSBY22O8Ys5MCoVlQVcdTRiJzy/t0Ut9aMt
